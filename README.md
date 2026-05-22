@@ -1,5 +1,5 @@
 # 🎓 Student Management System
-### DBMS Mini Project | Flask + MySQL + HTML/CSS
+### DBMS Mini Project | Flask + SQLite + HTML/CSS
 
 ---
 
@@ -10,7 +10,7 @@ StudentManagementSystem/
 │
 ├── app.py                      ← Main Flask application (backend logic)
 ├── requirements.txt            ← Python packages to install
-├── database.sql                ← MySQL setup script (run this first!)
+├── database.sql                ← SQlite3 setup script (run this first!)
 │
 ├── templates/                  ← HTML pages (Jinja2 templates)
 │   ├── base.html               ← Common layout (navbar, footer)
@@ -32,9 +32,10 @@ StudentManagementSystem/
 - Download from https://python.org and install.
 - Make sure to check "Add Python to PATH" during install.
 
-### Step 2 — Install MySQL
-- Download MySQL Community Server from https://dev.mysql.com/downloads/
-- Or use XAMPP (includes MySQL + phpMyAdmin) — easier for beginners.
+### Step 2 — SQLite Database
+
+- SQLite comes built into Python
+- No separate installation needed
 
 ### Step 3 — Open Project in VS Code
 ```bash
@@ -61,41 +62,21 @@ Activate it:
 pip install -r requirements.txt
 ```
 
-### Step 7 — Set Up the Database
-Open MySQL Workbench (or phpMyAdmin) and run the contents of `database.sql`:
+### Step 7 — Database Setup (SQLite)
 
-```sql
-CREATE DATABASE IF NOT EXISTS student_db;
-USE student_db;
-CREATE TABLE IF NOT EXISTS students (
-    id         INT AUTO_INCREMENT PRIMARY KEY,
-    name       VARCHAR(100) NOT NULL,
-    roll_no    VARCHAR(20)  NOT NULL UNIQUE,
-    branch     VARCHAR(50)  NOT NULL,
-    year       VARCHAR(10)  NOT NULL,
-    email      VARCHAR(100),
-    phone      VARCHAR(15),
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-```
+SQLite database will be created automatically when you run the Flask app.
 
-Or run via terminal:
+Database file:
 ```bash
-mysql -u root -p < database.sql
+students.db
 ```
 
-### Step 8 — Update Database Password in app.py
-Open `app.py` and edit the connection details:
-```python
-connection = mysql.connector.connect(
-    host='localhost',
-    user='root',
-    password='',        # ← Put your MySQL password here
-    database='student_db'
-)
+Run the application:
+```bash
+python app.py
 ```
 
-### Step 9 — Run the Application
+## Step 8 — Run the Application
 ```bash
 python app.py
 ```
@@ -105,7 +86,7 @@ You should see:
  * Running on http://127.0.0.1:5000
 ```
 
-### Step 10 — Open in Browser
+### Step 9 — Open in Browser
 Go to: **http://localhost:5000**
 
 ---
@@ -142,15 +123,15 @@ Go to: **http://localhost:5000**
 **Error: `ModuleNotFoundError: No module named 'flask'`**
 → Run: `pip install flask`
 
-**Error: `Access denied for user 'root'@'localhost'`**
-→ Update the password in `app.py` to match your MySQL root password.
+**Error: Database not opening**
+→ Delete students.db and run the app again.
 
 **Error: `Unknown database 'student_db'`**
-→ Run the `database.sql` script first in MySQL.
+→ Run the `database.sql` script first in SQLite.
 
 **Port already in use:**
 → Change the port: `app.run(debug=True, port=5001)`
 
 ---
 
-*Built as a DBMS Lab Mini Project — Flask + MySQL + HTML/CSS*
+*Built as a DBMS Lab Mini Project — Flask + SQLite + HTML/CSS*
