@@ -1,6 +1,6 @@
 # ============================================================
 # Student Management System - Main Application File
-# Backend: Flask | Database: MySQL
+# Backend: Flask | Database: SQLite
 # ============================================================
 from flask import Flask, render_template, request, redirect, url_for, flash
 
