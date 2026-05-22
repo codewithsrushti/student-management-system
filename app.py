@@ -177,5 +177,9 @@ def view_student(id):
 # ============================================================
 # RUN THE APP
 # ============================================================
-if __name__ == '__main__':
-    app.run(debug=True)  # debug=True shows errors in browser during development
+
+import os
+
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port)
