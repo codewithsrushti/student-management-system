@@ -2,51 +2,48 @@
 # Student Management System - Main Application File
 # Backend: Flask | Database: MySQL
 # ============================================================
-
 from flask import Flask, render_template, request, redirect, url_for, flash
-import mysql.connector
-from mysql.connector import Error
 
-# Initialize Flask app
 app = Flask(__name__)
-app.secret_key = 'your_secret_key_here'  # Needed for flash messages
-
-# ============================================================
-# DATABASE CONNECTION FUNCTION
-# ============================================================
-def get_db_connection():
-    """Create and return a MySQL database connection."""
-    try:
-        connection = mysql.connector.connect(
-            host='localhost',       # MySQL server host
-            user='root',           # Your MySQL username
-            password='',           # Your MySQL password (change if needed)
-            database='student_db'  # Database name
-        )
-        return connection
-    except Error as e:
-        print(f"Database connection error: {e}")
-        return None
+app.secret_key = "secret"
+import sqlite3
+def get_db_conn():
+    conn = sqlite3.connect('students.db')
+    conn.row_factory = sqlite3.Row
+    return conn
 
 
+conn = get_db_conn()
+
+conn.execute("""
+CREATE TABLE IF NOT EXISTS students (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT,
+    roll_no TEXT,
+    branch TEXT,
+    year TEXT,
+    email TEXT,
+    phone TEXT
+)
+""")
+
+conn.commit()
+conn.close()
 # ============================================================
 # ROUTE: HOME PAGE - View All Students
 # ============================================================
 @app.route('/')
 def index():
-    """Display all students from the database."""
-    connection = get_db_connection()
-    students = []
 
-    if connection:
-        cursor = connection.cursor(dictionary=True)  # Returns rows as dicts
-        cursor.execute("SELECT * FROM students ORDER BY id DESC")
-        students = cursor.fetchall()  # Fetch all student records
-        cursor.close()
-        connection.close()
+    conn = get_db_conn()
+    cursor = conn.cursor()
+
+    cursor.execute("SELECT * FROM students ORDER BY id DESC")
+    students = cursor.fetchall()
+
+    conn.close()
 
     return render_template('index.html', students=students)
-
 
 # ============================================================
 # ROUTE: ADD STUDENT - Show Form & Handle Submission
@@ -65,25 +62,25 @@ def add_student():
 
         # Basic validation
         if not name or not roll_no or not branch or not year:
-            flash('Please fill in all required fields!', 'error')
+            flash('Please fill in all required fields!', 'Exception')
             return render_template('add_student.html')
 
-        connection = get_db_connection()
-        if connection:
+        conn = get_db_conn()
+        if conn:
             try:
-                cursor = connection.cursor()
+                cursor = conn.cursor()
                 # Insert new student record
                 sql = """INSERT INTO students (name, roll_no, branch, year, email, phone)
-                         VALUES (%s, %s, %s, %s, %s, %s)"""
+                         VALUES (?, ?, ?, ?, ?, ?)"""
                 cursor.execute(sql, (name, roll_no, branch, year, email, phone))
-                connection.commit()  # Save changes
+                conn.commit()  # Save changes
                 flash('Student added successfully!', 'success')
                 cursor.close()
-                connection.close()
+                conn.close()
                 return redirect(url_for('index'))
-            except Error as e:
-                flash(f'Error adding student: {e}', 'error')
-                connection.close()
+            except Exception as e:
+                flash(f'Exception adding student: {e}', 'Exception')
+                conn.close()
 
     return render_template('add_student.html')
 
@@ -94,11 +91,11 @@ def add_student():
 @app.route('/edit/<int:id>', methods=['GET', 'POST'])
 def edit_student(id):
     """Show edit form on GET; update student on POST."""
-    connection = get_db_connection()
+    conn = get_db_conn()
     student = None
 
-    if connection:
-        cursor = connection.cursor(dictionary=True)
+    if conn:
+        cursor = conn.cursor()
 
         if request.method == 'POST':
             # Get updated form data
@@ -111,24 +108,24 @@ def edit_student(id):
 
             try:
                 # Update existing student record
-                sql = """UPDATE students SET name=%s, roll_no=%s, branch=%s,
-                         year=%s, email=%s, phone=%s WHERE id=%s"""
+                sql = """UPDATE students SET name=?, roll_no=?, branch=?,
+                         year=?, email=?, phone=? WHERE id=?"""
                 cursor.execute(sql, (name, roll_no, branch, year, email, phone, id))
-                connection.commit()
+                conn.commit()
                 flash('Student updated successfully!', 'success')
                 cursor.close()
-                connection.close()
+                conn.close()
                 return redirect(url_for('index'))
-            except Error as e:
-                flash(f'Error updating student: {e}', 'error')
+            except Exception as e:
+                flash(f'Exception updating student: {e}', 'Exception')
 
         else:
             # Fetch existing student data to pre-fill form
-            cursor.execute("SELECT * FROM students WHERE id = %s", (id,))
+            cursor.execute("SELECT * FROM students WHERE id = ?", (id,))
             student = cursor.fetchone()
 
         cursor.close()
-        connection.close()
+        conn.close()
 
     return render_template('edit_student.html', student=student)
 
@@ -139,18 +136,18 @@ def edit_student(id):
 @app.route('/delete/<int:id>')
 def delete_student(id):
     """Delete a student record by ID."""
-    connection = get_db_connection()
+    conn = get_db_conn()
 
-    if connection:
+    if conn:
         try:
-            cursor = connection.cursor()
-            cursor.execute("DELETE FROM students WHERE id = %s", (id,))
-            connection.commit()
+            cursor = conn.cursor()
+            cursor.execute("DELETE FROM students WHERE id = ?", (id,))
+            conn.commit()
             flash('Student deleted successfully!', 'success')
             cursor.close()
-            connection.close()
-        except Error as e:
-            flash(f'Error deleting student: {e}', 'error')
+            conn.close()
+        except Exception as e:
+            flash(f'Exception deleting student: {e}', 'Exception')
 
     return redirect(url_for('index'))
 
@@ -161,15 +158,15 @@ def delete_student(id):
 @app.route('/view/<int:id>')
 def view_student(id):
     """View detailed information of a single student."""
-    connection = get_db_connection()
+    conn = get_db_conn()
     student = None
 
-    if connection:
-        cursor = connection.cursor(dictionary=True)
-        cursor.execute("SELECT * FROM students WHERE id = %s", (id,))
+    if conn:
+        cursor = conn.cursor()
+        cursor.execute("SELECT * FROM students WHERE id = ?", (id,))
         student = cursor.fetchone()
         cursor.close()
-        connection.close()
+        conn.close()
 
     return render_template('view_student.html', student=student)
 
