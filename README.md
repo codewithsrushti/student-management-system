@@ -103,29 +103,13 @@ Go to: **http://localhost:5000**
 
 ---
 
-## 🗄️ Database Table Structure
-
-| Column     | Type         | Description              |
-|------------|--------------|--------------------------|
-| id         | INT (PK, AI) | Auto-generated unique ID |
-| name       | VARCHAR(100) | Student full name        |
-| roll_no    | VARCHAR(20)  | Unique roll number       |
-| branch     | VARCHAR(50)  | Branch/Department        |
-| year       | VARCHAR(10)  | Year of study            |
-| email      | VARCHAR(100) | Email (optional)         |
-| phone      | VARCHAR(15)  | Phone (optional)         |
-| created_at | TIMESTAMP    | Auto-set on insert       |
-
----
-
 ## 🐛 Common Issues & Fixes
 
 **Error: `ModuleNotFoundError: No module named 'flask'`**
 → Run: `pip install flask`
 
 **Error: Database not opening**
-→ Delete students.db and run the app again.
-
+→ Delete students.db and run the app again
 **Error: `Unknown database 'student_db'`**
 → Run the `database.sql` script first in SQLite.
 
