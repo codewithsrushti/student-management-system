@@ -1,0 +1,5 @@
+# Student Management System - Python Dependencies
+# Install with: pip install -r requirements.txt
+
+Flask==3.0.3
+mysql-connector-python==8.4.0

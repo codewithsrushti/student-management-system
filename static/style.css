@@ -1,0 +1,597 @@
+/* ============================================================
+   Student Management System - Main Stylesheet
+   Design: Clean academic dark-accent theme
+   ============================================================ */
+
+/* ---- CSS Variables (Design Tokens) ---- */
+:root {
+    --bg:           #f4f6fb;
+    --surface:      #ffffff;
+    --surface-2:    #f0f3fa;
+    --accent:       #2e4bce;
+    --accent-dark:  #1a3299;
+    --accent-light: #e8edfb;
+    --success:      #16a34a;
+    --success-bg:   #dcfce7;
+    --danger:       #dc2626;
+    --danger-bg:    #fee2e2;
+    --warning:      #d97706;
+    --text-primary: #0f1729;
+    --text-secondary:#4b5880;
+    --text-muted:   #8a94b0;
+    --border:       #dde2f0;
+    --border-focus: #2e4bce;
+    --radius-sm:    6px;
+    --radius:       12px;
+    --radius-lg:    20px;
+    --shadow-sm:    0 1px 4px rgba(46,75,206,0.07);
+    --shadow:       0 4px 24px rgba(46,75,206,0.10);
+    --shadow-lg:    0 8px 40px rgba(46,75,206,0.15);
+    --font-display: 'Syne', sans-serif;
+    --font-body:    'DM Sans', sans-serif;
+    --nav-h:        64px;
+}
+
+/* ---- Reset & Base ---- */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    font-family: var(--font-body);
+    background: var(--bg);
+    color: var(--text-primary);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    font-size: 15px;
+    line-height: 1.6;
+}
+
+a { text-decoration: none; color: inherit; }
+
+/* ============================================================
+   NAVBAR
+   ============================================================ */
+.navbar {
+    height: var(--nav-h);
+    background: var(--surface);
+    border-bottom: 1.5px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 2rem;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: var(--shadow-sm);
+}
+
+.nav-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 1.25rem;
+    color: var(--accent);
+    letter-spacing: -0.5px;
+}
+
+.brand-icon { font-size: 1.5rem; }
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    list-style: none;
+}
+
+.nav-link {
+    padding: 0.45rem 1.1rem;
+    border-radius: var(--radius-sm);
+    color: var(--text-secondary);
+    font-weight: 500;
+    transition: all 0.2s;
+    font-size: 0.9rem;
+}
+
+.nav-link:hover, .nav-link.active {
+    background: var(--accent-light);
+    color: var(--accent);
+}
+
+.btn-nav {
+    background: var(--accent);
+    color: #fff !important;
+    border-radius: var(--radius-sm);
+    font-weight: 600;
+}
+
+.btn-nav:hover {
+    background: var(--accent-dark) !important;
+    color: #fff !important;
+}
+
+/* ============================================================
+   MAIN CONTENT
+   ============================================================ */
+.main-content {
+    flex: 1;
+    max-width: 1100px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 4rem;
+}
+
+/* ============================================================
+   FLASH MESSAGES
+   ============================================================ */
+.flash-container {
+    max-width: 1100px;
+    margin: 1rem auto 0;
+    padding: 0 1.5rem;
+}
+
+.flash {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.85rem 1.2rem;
+    border-radius: var(--radius-sm);
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    animation: slideIn 0.3s ease;
+}
+
+.flash span { font-weight: 700; font-size: 1rem; }
+
+.flash-success {
+    background: var(--success-bg);
+    color: var(--success);
+    border: 1px solid #bbf7d0;
+}
+
+.flash-error {
+    background: var(--danger-bg);
+    color: var(--danger);
+    border: 1px solid #fecaca;
+}
+
+@keyframes slideIn {
+    from { opacity: 0; transform: translateY(-8px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ============================================================
+   PAGE HEADER
+   ============================================================ */
+.page-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.75rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.page-title {
+    font-family: var(--font-display);
+    font-size: 1.9rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    letter-spacing: -0.5px;
+    line-height: 1.2;
+}
+
+.page-subtitle {
+    color: var(--text-secondary);
+    font-size: 0.92rem;
+    margin-top: 0.2rem;
+}
+
+/* ============================================================
+   STATS BAR
+   ============================================================ */
+.stats-bar {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.stat-card {
+    background: var(--accent);
+    color: #fff;
+    padding: 1rem 1.75rem;
+    border-radius: var(--radius);
+    display: flex;
+    align-items: baseline;
+    gap: 0.75rem;
+    box-shadow: var(--shadow);
+}
+
+.stat-number {
+    font-family: var(--font-display);
+    font-size: 2rem;
+    font-weight: 800;
+    line-height: 1;
+}
+
+.stat-label {
+    font-size: 0.85rem;
+    opacity: 0.85;
+    font-weight: 500;
+}
+
+/* ============================================================
+   TABLE
+   ============================================================ */
+.table-wrapper {
+    background: var(--surface);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    border: 1.5px solid var(--border);
+}
+
+.students-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.students-table thead {
+    background: var(--text-primary);
+    color: #fff;
+}
+
+.students-table th {
+    padding: 0.9rem 1.1rem;
+    text-align: left;
+    font-family: var(--font-display);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.students-table td {
+    padding: 0.85rem 1.1rem;
+    border-bottom: 1px solid var(--border);
+    color: var(--text-primary);
+    font-size: 0.9rem;
+    vertical-align: middle;
+}
+
+.students-table tbody tr:last-child td { border-bottom: none; }
+
+.students-table tbody tr {
+    transition: background 0.15s;
+}
+
+.students-table tbody tr:hover {
+    background: var(--accent-light);
+}
+
+/* Name cell with avatar */
+.td-name {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.td-id { color: var(--text-muted); font-size: 0.82rem; }
+
+/* Avatar circle */
+.avatar {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 0.85rem;
+    flex-shrink: 0;
+}
+
+/* Badge for roll numbers */
+.badge {
+    background: var(--accent-light);
+    color: var(--accent);
+    padding: 0.2rem 0.65rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    font-family: var(--font-display);
+    white-space: nowrap;
+}
+
+.badge-large {
+    font-size: 0.95rem;
+    padding: 0.3rem 1rem;
+}
+
+/* Action buttons in table */
+.actions { display: flex; gap: 0.4rem; }
+
+.btn-action {
+    width: 32px;
+    height: 32px;
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.95rem;
+    transition: all 0.2s;
+    border: 1.5px solid transparent;
+}
+
+.btn-view  { background: #eff6ff; border-color: #bfdbfe; }
+.btn-edit  { background: #fefce8; border-color: #fde68a; }
+.btn-delete{ background: #fff1f2; border-color: #fecdd3; }
+
+.btn-view:hover  { background: #dbeafe; transform: scale(1.1); }
+.btn-edit:hover  { background: #fef08a; transform: scale(1.1); }
+.btn-delete:hover{ background: #fecdd3; transform: scale(1.1); }
+
+/* ============================================================
+   EMPTY STATE
+   ============================================================ */
+.empty-state {
+    text-align: center;
+    padding: 5rem 2rem;
+    background: var(--surface);
+    border-radius: var(--radius-lg);
+    border: 2px dashed var(--border);
+}
+
+.empty-icon { font-size: 3.5rem; margin-bottom: 1rem; }
+
+.empty-state h2 {
+    font-family: var(--font-display);
+    font-size: 1.4rem;
+    margin-bottom: 0.5rem;
+    color: var(--text-primary);
+}
+
+.empty-state p {
+    color: var(--text-secondary);
+    margin-bottom: 1.5rem;
+}
+
+/* ============================================================
+   BUTTONS
+   ============================================================ */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.6rem 1.35rem;
+    border-radius: var(--radius-sm);
+    font-weight: 600;
+    font-size: 0.88rem;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s;
+    font-family: var(--font-body);
+    white-space: nowrap;
+}
+
+.btn-primary {
+    background: var(--accent);
+    color: #fff;
+    box-shadow: 0 2px 8px rgba(46,75,206,0.25);
+}
+
+.btn-primary:hover {
+    background: var(--accent-dark);
+    box-shadow: 0 4px 16px rgba(46,75,206,0.35);
+    transform: translateY(-1px);
+}
+
+.btn-outline {
+    background: var(--surface);
+    color: var(--text-secondary);
+    border: 1.5px solid var(--border);
+}
+
+.btn-outline:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: var(--accent-light);
+}
+
+.btn-danger {
+    background: var(--danger);
+    color: #fff;
+}
+
+.btn-danger:hover {
+    background: #b91c1c;
+    transform: translateY(-1px);
+}
+
+/* ============================================================
+   FORM STYLES
+   ============================================================ */
+.form-container {
+    background: var(--surface);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow);
+    padding: 2.5rem;
+    border: 1.5px solid var(--border);
+    max-width: 780px;
+    margin: 0 auto;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+}
+
+.form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+
+.form-label {
+    font-weight: 600;
+    font-size: 0.85rem;
+    color: var(--text-primary);
+    letter-spacing: 0.02em;
+}
+
+.required { color: var(--danger); }
+
+.form-input {
+    padding: 0.7rem 1rem;
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-sm);
+    font-size: 0.92rem;
+    font-family: var(--font-body);
+    color: var(--text-primary);
+    background: var(--surface);
+    transition: border-color 0.2s, box-shadow 0.2s;
+    outline: none;
+    width: 100%;
+    appearance: none;
+}
+
+.form-input:focus {
+    border-color: var(--border-focus);
+    box-shadow: 0 0 0 3px rgba(46,75,206,0.12);
+}
+
+.form-input::placeholder { color: var(--text-muted); }
+
+select.form-input {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%238a94b0' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    padding-right: 2.5rem;
+    cursor: pointer;
+}
+
+.form-actions {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: 2rem;
+    flex-wrap: wrap;
+}
+
+/* ============================================================
+   STUDENT DETAIL VIEW
+   ============================================================ */
+.detail-container {
+    background: var(--surface);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow);
+    padding: 2.5rem;
+    border: 1.5px solid var(--border);
+    max-width: 780px;
+    margin: 0 auto;
+}
+
+.profile-header {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding-bottom: 2rem;
+    margin-bottom: 2rem;
+    border-bottom: 1.5px solid var(--border);
+}
+
+.profile-avatar-large {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 2rem;
+    flex-shrink: 0;
+    box-shadow: var(--shadow);
+}
+
+.profile-name {
+    font-family: var(--font-display);
+    font-size: 1.6rem;
+    font-weight: 800;
+    margin-bottom: 0.4rem;
+}
+
+.detail-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+}
+
+.detail-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.85rem;
+    padding: 1.1rem 1.2rem;
+    background: var(--surface-2);
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+}
+
+.detail-icon { font-size: 1.4rem; flex-shrink: 0; margin-top: 0.1rem; }
+
+.detail-label {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.2rem;
+}
+
+.detail-value {
+    font-size: 0.97rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+.footer {
+    background: var(--surface);
+    border-top: 1.5px solid var(--border);
+    text-align: center;
+    padding: 1.25rem;
+    color: var(--text-muted);
+    font-size: 0.82rem;
+}
+
+/* ============================================================
+   RESPONSIVE - MOBILE
+   ============================================================ */
+@media (max-width: 700px) {
+    .navbar { padding: 0 1rem; }
+    .brand-text { display: none; }
+    .main-content { padding: 1.25rem 1rem 3rem; }
+
+    .page-header { flex-direction: column; align-items: flex-start; }
+
+    .form-grid { grid-template-columns: 1fr; }
+    .form-container { padding: 1.5rem; }
+
+    .detail-grid { grid-template-columns: 1fr; }
+    .detail-container { padding: 1.5rem; }
+
+    .profile-header { flex-direction: column; text-align: center; }
+
+    .students-table { font-size: 0.82rem; }
+    .students-table th, .students-table td { padding: 0.6rem 0.7rem; }
+
+    .nav-links { gap: 0.25rem; }
+    .nav-link { padding: 0.4rem 0.75rem; font-size: 0.82rem; }
+}

@@ -1,0 +1,119 @@
+{% extends 'base.html' %}
+{% block title %}Edit Student - Student Management System{% endblock %}
+
+{% block content %}
+
+<!-- ======= PAGE HEADER ======= -->
+<div class="page-header">
+    <div class="page-header-text">
+        <h1 class="page-title">Edit Student</h1>
+        <p class="page-subtitle">Update the information for {{ student.name }}</p>
+    </div>
+    <a href="{{ url_for('index') }}" class="btn btn-outline">← Back to List</a>
+</div>
+
+<!-- ======= EDIT STUDENT FORM ======= -->
+<div class="form-container">
+    {% if student %}
+    <form method="POST" action="{{ url_for('edit_student', id=student.id) }}" class="student-form">
+
+        <div class="form-grid">
+
+            <!-- Student Name (pre-filled) -->
+            <div class="form-group">
+                <label for="name" class="form-label">Full Name <span class="required">*</span></label>
+                <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    class="form-input"
+                    value="{{ student.name }}"
+                    required>
+            </div>
+
+            <!-- Roll Number (pre-filled) -->
+            <div class="form-group">
+                <label for="roll_no" class="form-label">Roll Number <span class="required">*</span></label>
+                <input
+                    type="text"
+                    id="roll_no"
+                    name="roll_no"
+                    class="form-input"
+                    value="{{ student.roll_no }}"
+                    required>
+            </div>
+
+            <!-- Branch (pre-selected) -->
+            <div class="form-group">
+                <label for="branch" class="form-label">Branch / Department <span class="required">*</span></label>
+                <select id="branch" name="branch" class="form-input" required>
+                    <option value="" disabled>Select Branch</option>
+                    {% for branch_option in ['Computer Science', 'Electronics', 'Mechanical Engineering',
+                                             'Civil Engineering', 'Electrical Engineering',
+                                             'Information Technology', 'Chemical Engineering', 'Biotechnology'] %}
+                        <option value="{{ branch_option }}"
+                            {% if student.branch == branch_option %}selected{% endif %}>
+                            {{ branch_option }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <!-- Year (pre-selected) -->
+            <div class="form-group">
+                <label for="year" class="form-label">Year of Study <span class="required">*</span></label>
+                <select id="year" name="year" class="form-input" required>
+                    {% for year_option in ['1st Year', '2nd Year', '3rd Year', '4th Year'] %}
+                        <option value="{{ year_option }}"
+                            {% if student.year == year_option %}selected{% endif %}>
+                            {{ year_option }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <!-- Email (pre-filled) -->
+            <div class="form-group">
+                <label for="email" class="form-label">Email Address</label>
+                <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    class="form-input"
+                    value="{{ student.email or '' }}">
+            </div>
+
+            <!-- Phone (pre-filled) -->
+            <div class="form-group">
+                <label for="phone" class="form-label">Phone Number</label>
+                <input
+                    type="tel"
+                    id="phone"
+                    name="phone"
+                    class="form-input"
+                    value="{{ student.phone or '' }}"
+                    maxlength="15">
+            </div>
+
+        </div><!-- end .form-grid -->
+
+        <!-- Form Buttons -->
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">✓ Update Student</button>
+            <a href="{{ url_for('index') }}" class="btn btn-outline">Cancel</a>
+        </div>
+
+    </form>
+
+    {% else %}
+    <!-- If student not found -->
+    <div class="empty-state">
+        <div class="empty-icon">⚠️</div>
+        <h2>Student Not Found</h2>
+        <p>The student record you are looking for does not exist.</p>
+        <a href="{{ url_for('index') }}" class="btn btn-primary">Back to Home</a>
+    </div>
+    {% endif %}
+</div>
+
+{% endblock %}
